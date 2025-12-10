@@ -20,7 +20,7 @@ def ricker(dt, pt):
 
     return c
     
-def load_datasets(train_size=26000, val_size=1000, test_size=1000):
+def load_datasets(train_size=26000, val_size=1000, test_size=1000, batch_size=64):
     x = torch.cat([torch.load("dataset/x_train.pt"), torch.load("dataset/x_train_2.pt")])
     y = torch.cat([torch.load("dataset/y_train.pt"), torch.load("dataset/y_train_2.pt")])
     c = torch.cat([torch.load("dataset/c_train.pt"), torch.load("dataset/c_train_2.pt")])
@@ -39,9 +39,9 @@ def load_datasets(train_size=26000, val_size=1000, test_size=1000):
     c_test = (c_test-c_min)/(c_max-c_min)
     y_test = (y_test-y_min)/(y_max-y_min)
     
-    train = DataLoader(TensorDataset(x[:train_size], c[:train_size], y[:train_size]), batch_size=32, shuffle=True)
-    val = DataLoader(TensorDataset(x[train_size:train_size+val_size], c[train_size:train_size+val_size], y[train_size:train_size+val_size]), batch_size=32, shuffle=False)
-    test = DataLoader(TensorDataset(x_test[:test_size], c_test[:test_size], y_test[:test_size]), batch_size=32, shuffle=False)
+    train = DataLoader(TensorDataset(x[:train_size], c[:train_size], y[:train_size]), batch_size=batch_size, shuffle=True)
+    val = DataLoader(TensorDataset(x[train_size:train_size+val_size], c[train_size:train_size+val_size], y[train_size:train_size+val_size]), batch_size=batch_size, shuffle=False)
+    test = DataLoader(TensorDataset(x_test[:test_size], c_test[:test_size], y_test[:test_size]), batch_size=batch_size, shuffle=False)
     return train, val, test, x_min, x_max, c_min, c_max, y_min, y_max
 
 def rnmse(pred, target):
