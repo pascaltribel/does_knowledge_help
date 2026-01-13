@@ -17,7 +17,6 @@ def ricker(dt, pt):
     for it in range(0, nt):
         t = ((it + 1) - t0) * dt
         c[it] = -2 * a_ricker * t * math.exp(-((a_ricker * t) ** 2))
-
     return c
     
 def load_datasets(train_size=26000, val_size=1000, test_size=1000, batch_size=64):
@@ -45,4 +44,7 @@ def load_datasets(train_size=26000, val_size=1000, test_size=1000, batch_size=64
     return train, val, test, x_min, x_max, c_min, c_max, y_min, y_max
 
 def rnmse(pred, target):
-    return (torch.mean((pred - target)**2)/torch.var(target))**0.5
+    if isinstance(pred, np.ndarray):
+        return (np.mean((pred - target)**2)/np.var(target))**0.5
+    else:
+        return (torch.mean((pred - target)**2)/torch.var(target))**0.5
