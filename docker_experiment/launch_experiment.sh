@@ -1,0 +1,1 @@
+docker run -d -e --rm --memory=64G --memory-swap=70G --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -it -v /Users/pascaltribel/phd/does_knowledge_help/article:/home/$USER/shared_data -p 9119:8890 dkh_docker:latest
