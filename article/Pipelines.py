@@ -57,7 +57,7 @@ c_test = torch.load("../dataset/c_test.pt")
 
 n_points = x.shape[0]
 n_cv = 5
-n_epochs = 500
+n_epochs = 50
 n_components_pca = 512
 scores = {}
 
@@ -348,7 +348,7 @@ class CNN(nn.Module):
 def get_rnmse():
     return rnmse
 
-device = 'mps'
+device = 'cuda'
 
 
 # In[22]:
@@ -395,16 +395,16 @@ data.to_csv('results.csv')
 
 # In[24]:
 
-print("Plotting figure...")
+#print("Plotting figure...")
 
-plt.figure(figsize=(9, 6))
-plt.title(f"{n_components_pca} Principal Components, {n_points} training samples, {n_cv}-fold CV")
-sns.boxplot(data)
-plt.ylabel("RNMSE")
-plt.xticks(rotation=30)
-plt.tight_layout()
-plt.savefig('results.jpg', dpi=150)
-plt.close()
+#plt.figure(figsize=(9, 6))
+#plt.title(f"{n_components_pca} Principal Components, {n_points} training samples, {n_cv}-fold CV")
+#sns.boxplot(data)
+#plt.ylabel("RNMSE")
+#plt.xticks(rotation=30)
+#plt.tight_layout()
+#plt.savefig('results.jpg', dpi=150)
+#plt.close()
 
 
 # In[ ]:

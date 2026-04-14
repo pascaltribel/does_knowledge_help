@@ -46,11 +46,11 @@ plt.rc('ytick',labelsize=12)
 print("Reading files...")
 x = torch.cat([torch.load("../dataset/x_train.pt"), torch.load("../dataset/x_train_2.pt")])
 y = torch.cat([torch.load("../dataset/y_train.pt"), torch.load("../dataset/y_train_2.pt")])
-#c = torch.cat([torch.load("../dataset/c_train.pt"), torch.load("../dataset/c_train_2.pt")])
+c = torch.cat([torch.load("../dataset/c_train.pt"), torch.load("../dataset/c_train_2.pt")])
 
-#x_test = torch.load("../dataset/x_test.pt")
-#y_test = torch.load("../dataset/y_test.pt")
-#c_test = torch.load("../dataset/c_test.pt")
+x_test = torch.load("../dataset/x_test.pt")
+y_test = torch.load("../dataset/y_test.pt")
+c_test = torch.load("../dataset/c_test.pt")
 
 
 # In[3]:
@@ -64,10 +64,10 @@ scores = {}
 # In[4]:
 
 
-x_np, y_np = x.numpy(), y.numpy()
-x_np_reshaped, y_np_reshaped = x_np.reshape((x_np.shape[0], -1)), y_np.reshape((y_np.shape[0], -1))
-#x_test_np, y_test_np, c_test_np = x_test.numpy(), y_test.numpy(), c_test.numpy()
-#x_test_np_reshaped, y_test_np_reshaped, c_test_np_reshaped = x_test_np.reshape((x_test_np.shape[0], -1)), y_test_np.reshape((y_test_np.shape[0], -1)), c_test_np.reshape((c_test_np.shape[0], -1))
+x_np, y_np, c_np = x.numpy(), y.numpy(), c.numpy()
+x_np_reshaped, y_np_reshaped, c_np_reshaped = x_np.reshape((x_np.shape[0], -1)), y_np.reshape((y_np.shape[0], -1)), c_np.reshape((c_np.shape[0], -1))
+x_test_np, y_test_np, c_test_np = x_test.numpy(), y_test.numpy(), c_test.numpy()
+x_test_np_reshaped, y_test_np_reshaped, c_test_np_reshaped = x_test_np.reshape((x_test_np.shape[0], -1)), y_test_np.reshape((y_test_np.shape[0], -1)), c_test_np.reshape((c_test_np.shape[0], -1))
 
 
 class ResidualRegressor(BaseEstimator):
