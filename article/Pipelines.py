@@ -56,7 +56,7 @@ c_test = torch.load("../dataset/c_test.pt")
 # In[3]:
 
 n_points = x.shape[0]
-n_cv = 5
+n_cv = 10
 n_epochs = 50
 n_components_pca = 512
 scores = {}

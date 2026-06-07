@@ -79,7 +79,7 @@ def scorer_rnmse(estimator, x, y):
     return rnmse(estimator.predict(x), y)
 
 n_points = X.shape[0]
-n_cv = 5
+n_cv = 10
 n_epochs = 50 #200
 
 scores = {}
@@ -120,7 +120,7 @@ def get_rnmse():
     return rnmse
 
 train = TensorDataset(X[:n_points], y[:n_points])
-kfold = KFold(n_splits=5, shuffle=True, random_state=42)
+kfold = KFold(n_splits=n_cv, shuffle=True, random_state=42)
 
 val_losses = []
 k = 0
@@ -169,5 +169,5 @@ for fold, (train_idx, val_idx) in enumerate(kfold.split(train)):
         del pipe_lm
     scores["CNN"] = val_losses
 
-    pd.DataFrame(scores).to_csv(f'scores_CNN{k}.csv')
+    pd.DataFrame(scores).to_csv(f'scores_CNN1d{k}.csv')
     k += 1

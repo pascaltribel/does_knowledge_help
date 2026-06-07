@@ -55,8 +55,8 @@ c_test = torch.load("../dataset/c_test.pt")
 
 # In[3]:
 
-n_points = 1024#x.shape[0]
-n_cv = 5
+n_points = x.shape[0]
+n_cv = 10
 scores = {}
 
 # In[4]:
@@ -141,9 +141,9 @@ print(f"Done in {time()-t}s")
 t = time()
 print("RF...")
 
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import ExtraTreesRegressor
 scores["RF"] = cross_val_score(
-    NoResidualRegressor(regressor=RandomForestRegressor(n_jobs=-1)),
+    NoResidualRegressor(regressor=ExtraTreesRegressor(n_jobs=-1)),
     x_np_reshaped[:n_points], y_np_reshaped[:n_points],
     cv=n_cv,
     scoring=scorer_rnmse,

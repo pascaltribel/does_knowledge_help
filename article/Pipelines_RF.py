@@ -56,7 +56,7 @@ c_test = torch.load("../dataset/c_test.pt")
 # In[3]:
 
 n_points = x.shape[0]
-n_cv = 5
+n_cv = 10
 n_epochs = 50
 n_components_pca = 512
 scores = {}
@@ -99,13 +99,13 @@ def scorer_rnmse(estimator, x, y):
 # In[17]:
 
 t = time()
-print("Residual RF...")
-from sklearn.ensemble import RandomForestRegressor
-scores["Residual RF"] = cross_val_score(
+print("Residual ET...")
+from sklearn.ensemble import ExtraTreesRegressor
+scores["Residual ET"] = cross_val_score(
     ResidualRegressor(TransformedTargetRegressor(
             regressor=Pipeline([
                 ("pca", PCA(n_components=n_components_pca)),
-                ("rf", RandomForestRegressor(n_jobs=-1))
+                ("et", ExtraTreesRegressor(n_jobs=-1))
             ]),
             transformer=PCA(n_components=n_components_pca),
             check_inverse=False
@@ -121,6 +121,6 @@ print(f"Done in {time()-t}s")
 print("Saving data...")
 
 data = pd.DataFrame(scores)[sorted(scores, key=lambda x: np.mean(scores[x]), reverse=True)]
-data.to_csv('results_rf.csv')
+data.to_csv('results_et.csv')
 
 print("Done.")

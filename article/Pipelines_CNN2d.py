@@ -74,7 +74,7 @@ def scorer_rnmse(estimator, x, y):
     return rnmse(estimator.predict(x), y)
 
 n_points = X.shape[0]
-n_cv = 5
+n_cv = 10
 n_epochs = 50 #200
 
 scores = {}
@@ -95,13 +95,17 @@ class CNN(nn.Module):
 
         self.features = nn.Sequential(
             nn.Dropout(0.1),
-            nn.Conv2d(1, 8, kernel_size=3, padding='same'),
+            nn.Conv2d(1, 16, kernel_size=3, padding='same'),
             nn.ReLU(),
-            nn.Conv2d(8, 16, kernel_size=3, padding='same'),
+            nn.Conv2d(16, 32, kernel_size=3, padding='same'),
             nn.ReLU(),
-            nn.Conv2d(16, 8, kernel_size=3, padding='same'),
+            nn.Conv2d(32, 64, kernel_size=3, padding='same'),
             nn.ReLU(),
-            nn.Conv2d(8, 1, kernel_size=3, padding='same'),
+            nn.Conv2d(64, 32, kernel_size=3, padding='same'),
+            nn.ReLU(),
+            nn.Conv2d(32, 16, kernel_size=3, padding='same'),
+            nn.ReLU(),
+            nn.Conv2d(16, 1, kernel_size=3, padding='same'),
         )
         self.alpha, self.beta, self.gamma = nn.Parameter(torch.tensor([1/3])), nn.Parameter(torch.tensor([1/3])), nn.Parameter(torch.tensor([1/3]))
 
@@ -114,7 +118,7 @@ def get_rnmse():
     return rnmse
 
 train = TensorDataset(X[:n_points], y[:n_points])
-kfold = KFold(n_splits=5, shuffle=True, random_state=42)
+kfold = KFold(n_splits=n_cv, shuffle=True, random_state=42)
 
 val_losses = []
 k = 0
